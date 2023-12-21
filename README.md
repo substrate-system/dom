@@ -40,11 +40,11 @@ Is equal to `document.querySelectorAll`
 Look for a DOM element by slector. Default timeout is 5 seconds. Throws if the element is not found.
 
 ```ts
-function waitFor (args:{
+export function waitFor (args:{
     selector?:string,
     visible?:boolean,
     timeout?:number
-}, lambda?:() => Element|null)
+}|string, lambda?:() => Element|null):Promise<Element>
 ```
 
 #### example

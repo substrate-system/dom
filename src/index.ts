@@ -1,10 +1,10 @@
-const SECOND = 1000
-
 export const qs = document.querySelector.bind(document)
 export const qsa = document.querySelectorAll.bind(document)
 
+const SECOND = 1000
+const DEFAULT_TIMEOUT = (5 * SECOND)
+
 export const dom = {
-    DEFAULT_TIMEOUT: (5 * SECOND),
     getComputedStyle,
     isElementVisible,
     waitForText,
@@ -195,16 +195,19 @@ export function waitForText (args:{
 }
 
 /**
+ * Find an element
+ *
  * @param {{
  *    selector?: string,
  *    visible?: boolean, // the element needs to be visible
  *    timeout?: number // how long to wait
- * }} args
- * @param {() => HTMLElement |  null | undefined} [lambda]
+ * }|string} args
+ * @param {() => HTMLElement | null} [lambda]
  * @throws {Error} - Throws an error if neither `lambda` nor `selector`
  * is provided.
  * @throws {Error} - Throws an error if the element is not found within
  * the timeout.
+ * @returns {Element} The HTML element
  */
 export function waitFor (args:{
     selector?:string,
@@ -213,12 +216,12 @@ export function waitFor (args:{
 }|string, lambda?:() => Element|null):Promise<Element> {
     let selector:string
     let visible:boolean = true
-    let timeout = dom.DEFAULT_TIMEOUT
+    let timeout = DEFAULT_TIMEOUT
     if (typeof args === 'string') {
         selector = args
     } else {
         if (typeof args.visible === 'undefined') visible = true
-        timeout = args.timeout ?? dom.DEFAULT_TIMEOUT
+        timeout = args.timeout ?? DEFAULT_TIMEOUT
         selector = args.selector!
     }
 
