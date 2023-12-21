@@ -23,7 +23,7 @@
   "dependencies": {},
   "devDependencies": {
     "@nichoth/tapzero": "^0.8.4",
-    "@typescript-eslint/parser": "^5.55.0",
+    "@typescript-eslint/parser": "^6.15.0",
     "auto-changelog": "^2.4.0",
     "esbuild": "^0.19.5",
     "standardx": "^7.0.0",
