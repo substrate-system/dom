@@ -123,7 +123,7 @@ async function sleep (ms:number):Promise<void>
 ```js
 import { sleep } from '@nichoth/dom'
 
-await sleep(3000)
+await sleep(3000)  // wait 3 seconds
 ```
 
 ## credits
