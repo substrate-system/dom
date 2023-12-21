@@ -27,10 +27,10 @@ const dom = require('@nichoth/dom').dom
 
 ### convenient shortcuts
 
-#### dom.qs
+#### `dom.qs`
 This points to `document.querySelector`
 
-#### dom.qsa
+#### `dom.qsa`
 Is equal to `document.querySelectorAll`
 
 -------
