@@ -3,7 +3,6 @@
 [![Socket Badge](https://socket.dev/api/badge/npm/package/@nichoth/dom)](https://socket.dev/npm/package/@nichoth/dom)
 [![types](https://img.shields.io/npm/types/@nichoth/dom)](README.md)
 [![module](https://img.shields.io/badge/module-ESM%2FCJS-blue)](README.md)
-[![dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen)](package.json)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen)](LICENSE)
 
 Helpers for working with the DOM, useful for tests.
