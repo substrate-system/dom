@@ -1,7 +1,7 @@
 const SECOND = 1000
 
 export const dom = {
-    defaultTimeout: (5 * SECOND),
+    DEFAULT_TIMEOUT: (5 * SECOND),
     getComputedStyle,
     isElementVisible,
     waitForText,
@@ -97,7 +97,7 @@ function waitForText (args:{
     element:Element,
     multipleTags?:boolean,
     regex?:RegExp
-}) {
+}):Promise<Element> {
     return waitFor({
         timeout: args.timeout
     }, () => {
@@ -175,12 +175,12 @@ function waitFor (args:{
     selector?:string,
     visible?:boolean,
     timeout?:number
-}, lambda?:() => Element|null) {
+}, lambda?:() => Element|null):Promise<Element> {
     return new Promise((resolve, reject) => {
         const {
             selector,
             visible = true,
-            timeout = dom.defaultTimeout
+            timeout = dom.DEFAULT_TIMEOUT
         } = args
 
         if (!lambda && selector) {

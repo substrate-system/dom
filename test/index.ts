@@ -1,6 +1,3 @@
-// @ts-check
-'use strict'
-
 const { test } = require('@nichoth/tapzero')
 const dom = require('../dist/index.cjs').dom
 const { Terminal } = require('xterm')
@@ -198,7 +195,6 @@ test('another case for text + tags', async t => {
 
     try {
         const found = await dom.waitForText({
-            // @ts-ignore
             element: dom.qs('#test-two'),
             multipleTags: true,
             text: 'bbb',
