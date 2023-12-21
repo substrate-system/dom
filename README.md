@@ -17,6 +17,9 @@ npm i -D @nichoth/dom
 ### import
 ```js
 import { dom } from '@nichoth/dom'
+
+// or import individual functions
+import { waitFor } from '@nichoth/dom'
 ```
 
 ### require
