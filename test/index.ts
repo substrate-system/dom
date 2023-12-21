@@ -1,6 +1,6 @@
-const { test } = require('@nichoth/tapzero')
-const dom = require('../dist/index.cjs').dom
-const { Terminal } = require('xterm')
+import { dom } from '../src/index.js'
+import { test } from '@nichoth/tapzero'
+import { Terminal } from 'xterm'
 
 test('dom.waitFor', async t => {
     const p = document.createElement('p')
@@ -27,6 +27,16 @@ test('dom.waitFor', async t => {
     })
 
     t.equal(el.textContent, 'bar', 'should find the element after waiting')
+})
+
+test('call waitFor with a string', async t => {
+    const el = dom.waitFor('p')
+    t.ok(el, 'should find an element given a string argument')
+})
+
+test('dom.click', async t => {
+    const p = await dom.waitFor({ selector: 'p' })
+    dom.click(p)
 })
 
 test('dom.waitForText', async t => {
@@ -195,7 +205,7 @@ test('another case for text + tags', async t => {
 
     try {
         const found = await dom.waitForText({
-            element: dom.qs('#test-two'),
+            element: dom.qs('#test-two') as Element,
             multipleTags: true,
             text: 'bbb',
             timeout: 1000

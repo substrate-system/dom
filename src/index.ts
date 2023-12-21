@@ -38,6 +38,10 @@ function isStyleVisible (element:Element):boolean {
 }
 
 /**
+ * Return an object containing the values of all CSS properties of an element,
+ * after applying active stylesheets.
+ *
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle|MDN}
  * @param {Element | HTMLElement} element
  */
 function getComputedStyle (element:Element|HTMLElement) {
@@ -52,10 +56,13 @@ function getComputedStyle (element:Element|HTMLElement) {
 }
 
 /**
+ * Return if the given attribute is visible.
+ *
  * @param {Element} element
  * @param {Element} [previousElement]
+ * @returns {boolean}
  */
-function isAttributeVisible (element:Element, previousElement?:Element) {
+function isAttributeVisible (element:Element, previousElement?:Element):boolean {
     return (
         !element.hasAttribute('hidden') &&
     (element.nodeName === 'DETAILS' && previousElement?.nodeName !== 'SUMMARY'
@@ -65,7 +72,9 @@ function isAttributeVisible (element:Element, previousElement?:Element) {
 }
 
 /**
+ * Return if the given element is visible.
  * Copy pasted from https://raw.githubusercontent.com/testing-library/jest-dom/master/src/to-be-visible.js
+ *
  * @param {Element} element
  * @param {Element} [previousElement]
  * @returns {boolean}
@@ -83,6 +92,9 @@ function isElementVisible (
 }
 
 /**
+ * Look for the given text within the given parent element. Return the element
+ * containing the text.
+ *
  * @param {{
  *    text?: string,
  *    timeout?: number
@@ -175,14 +187,19 @@ function waitFor (args:{
     selector?:string,
     visible?:boolean,
     timeout?:number
-}, lambda?:() => Element|null):Promise<Element> {
-    return new Promise((resolve, reject) => {
-        const {
-            selector,
-            visible = true,
-            timeout = dom.DEFAULT_TIMEOUT
-        } = args
+}|string, lambda?:() => Element|null):Promise<Element> {
+    let selector:string
+    let visible:boolean = true
+    let timeout = dom.DEFAULT_TIMEOUT
+    if (typeof args === 'string') {
+        selector = args
+    } else {
+        if (typeof args.visible === 'undefined') visible = true
+        timeout = args.timeout ?? dom.DEFAULT_TIMEOUT
+        selector = args.selector!
+    }
 
+    return new Promise((resolve, reject) => {
         if (!lambda && selector) {
             lambda = () => document.querySelector(selector)
         }
@@ -213,9 +230,9 @@ function waitFor (args:{
 /**
  * Click the given element.
  *
- * @param {Element | HTMLElement} element
+ * @param {Element} element
  */
-function click (element:Element|HTMLElement) {
+function click (element:Element) {
     domEvent({
         event: new window.MouseEvent('click', {
             bubbles: true,

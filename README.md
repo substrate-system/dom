@@ -1,6 +1,6 @@
 # test dom
-![tests](https://github.com/nichoth/test-dom/actions/workflows/nodejs.yml/badge.svg)
-[![types](https://img.shields.io/npm/types/@nichoth/test-dom)](README.md)
+![tests](https://github.com/nichoth/dom/actions/workflows/nodejs.yml/badge.svg)
+[![types](https://img.shields.io/npm/types/@nichoth/dom)](README.md)
 [![module](https://img.shields.io/badge/module-ESM%2FCJS-blue)](README.md)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen)](LICENSE)
 
@@ -25,8 +25,18 @@ const dom = require('@nichoth/dom').dom
 
 ## API
 
+### convenient shortcuts
+
+#### dom.qs
+This points to `document.querySelector`
+
+#### dom.qsa
+Is equal to `document.querySelectorAll`
+
+-------
+
 ### dom.waitFor
-Look for a DOM element by slector. Default timeout is 5 seconds.
+Look for a DOM element by slector. Default timeout is 5 seconds. Throws if the element is not found.
 
 ```ts
 function waitFor (args:{
@@ -41,10 +51,13 @@ function waitFor (args:{
 const foundElement = await dom.waitFor({
     selector: 'p'
 })
+
+// or pass in a string to use as a query selector
+const el = await dom.waitFor('#my-element)
 ```
 
 ### dom.waitForText
-Look for an element containing the given text. Default timeout is 5 seconds.
+Look for an element containing the given text and return the element if found. Default timeout is 5 seconds. Throws if the element is not found.
 
 ```ts
 function waitForText (args:{
@@ -65,14 +78,30 @@ const el = await dom.waitForText({
 ```
 
 Pass in a parent element and timeout.
-
 ```js
 const found = await dom.waitForText({
     element: dom.qs('#test-two'),
     multipleTags: true,
     text: 'bbb',
-    timeout: 1000
+    timeout: 10000  // 10 seconds
 })
+```
+
+### click
+Dispatch a click event from the given element.
+
+```js
+import { dom } from '@nichoth/dom'
+dom.click(dom.qs('#my-element'))
+```
+
+### event
+Dispatch an event from an element.
+
+```js
+import { dom } from '@nichoth/dom'
+
+dom.event('hello-event', dom.qs('#example'))
 ```
 
 ## credits
