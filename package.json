@@ -1,5 +1,6 @@
 {
   "name": "@nichoth/dom",
+  "description": "Helpers for working with the DOM",
   "private": false,
   "type": "module",
   "version": "0.0.6",
@@ -49,7 +50,6 @@
   },
   "author": "nichoth <nichoth@gmail.com> (https://nichoth.com)",
   "license": "MIT",
-  "description": "![tests](https://github.com/nichoth/test-dom/actions/workflows/nodejs.yml/badge.svg) [![types](https://img.shields.io/npm/types/@nichoth/test-dom)](README.md) [![module](https://img.shields.io/badge/module-ESM%2FCJS-blue)](README.md) [![license](https://img.shields.io/badge/license-MIT-brightgreen)](LICENSE)",
   "directories": {
     "test": "test"
   },
