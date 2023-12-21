@@ -57,7 +57,7 @@ const el = await dom.waitFor('#my-element)
 ```
 
 ### dom.waitForText
-Look for an element containing the given text and return the element if found. Default timeout is 5 seconds. Throws if the element is not found.
+Look for an element containing the given text, or that matches a given regex. Return the element if found. Default timeout is 5 seconds. Throws if the element is not found.
 
 ```ts
 function waitForText (args:{
