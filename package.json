@@ -1,12 +1,16 @@
 {
-  "private": true,
+  "name": "@nichoth/dom",
+  "private": false,
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "main": "dist/index.js",
+  "files": [
+    "./dist/*"
+  ],
   "scripts": {
     "lint": "standardx -v \"./**/*.ts\"",
     "build-tests": "esbuild test/index.ts --target=es2020 --bundle --keep-names > test/test-bundle.js",
-    "test": "npm run lint && npm run build && npm run build-tests && npm run test-tape-run",
+    "test": "npm run lint && npm run build && esbuild --bundle test/index.ts | tape-run | tap-arc",
     "test-tape-run": "cat test/index.html | tape-run --input=html --static=test | tap-arc",
     "build-cjs": "esbuild src/*.ts --format=cjs --tsconfig=tsconfig.build.json --keep-names --outdir=./dist --out-extension:.js=.cjs",
     "build": "mkdir -p ./dist && rm -rf ./dist/* && npm run build-cjs && tsc --project tsconfig.build.json",
@@ -29,7 +33,8 @@
     "tap-arc": "^1.2.2",
     "tape-run": "^11.0.0",
     "typescript": "^5.2.2",
-    "vite": "^5.0.0"
+    "vite": "^5.0.0",
+    "xterm": "^5.3.0"
   },
   "exports": {
     ".": {
@@ -48,5 +53,21 @@
     }
   },
   "author": "nichoth <nichoth@gmail.com> (https://nichoth.com)",
-  "license": "AGPL-3.0-or-later"
+  "license": "MIT",
+  "description": "![tests](https://github.com/nichoth/test-dom/actions/workflows/nodejs.yml/badge.svg) [![types](https://img.shields.io/npm/types/@nichoth/test-dom)](README.md) [![module](https://img.shields.io/badge/module-ESM%2FCJS-blue)](README.md) [![license](https://img.shields.io/badge/license-MIT-brightgreen)](LICENSE)",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nichoth/dom.git"
+  },
+  "keywords": [
+    "test",
+    "dom"
+  ],
+  "bugs": {
+    "url": "https://github.com/nichoth/dom/issues"
+  },
+  "homepage": "https://github.com/nichoth/dom#readme"
 }

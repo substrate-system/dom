@@ -5,7 +5,7 @@
     "target": "ES2022",
     "moduleResolution": "nodenext",
     "esModuleInterop": false,
-    "lib": ["ES2022", "DOM", "WebWorker"],
+    "lib": ["ES2022", "DOM", "dom.iterable"],
     "allowJs": false,
     "skipLibCheck": true,
     "outDir": "dist",
@@ -17,15 +17,12 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "preact",
     "noImplicitAny": false,
     "declaration": true,
     "declarationDir": "dist",
     "declarationMap": true
   },
   "include": [
-    "example",
     "src/**/*",
     "test",
     "lib.es5.d.ts"
