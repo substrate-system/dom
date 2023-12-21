@@ -1,5 +1,8 @@
 const SECOND = 1000
 
+export const qs = document.querySelector.bind(document)
+export const qsa = document.querySelectorAll.bind(document)
+
 export const dom = {
     DEFAULT_TIMEOUT: (5 * SECOND),
     getComputedStyle,
@@ -7,15 +10,31 @@ export const dom = {
     waitForText,
     waitFor,
     click,
-    event: domEvent,
-    qs: document.querySelector.bind(document),
-    qsa: document.querySelectorAll.bind(document)
+    event,
+    sleep,
+    qs,
+    qsa,
+}
+
+/**
+ * Sleeps for `ms` milliseconds.
+ * @param {number} ms
+ * @return {Promise<void>}
+ */
+export async function sleep (ms:number):Promise<void> {
+    await new Promise((resolve) => {
+        if (!ms) {
+            process.nextTick(resolve)
+        } else {
+            setTimeout(resolve, ms)
+        }
+    })
 }
 
 /**
  * @param {Element} element
  */
-function isStyleVisible (element:Element):boolean {
+export function isStyleVisible (element:Element):boolean {
     const ownerDocument = element.ownerDocument
     if (!ownerDocument || !ownerDocument.defaultView) {
         console.warn('invalid element?', element)
@@ -44,7 +63,7 @@ function isStyleVisible (element:Element):boolean {
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle|MDN}
  * @param {Element | HTMLElement} element
  */
-function getComputedStyle (element:Element|HTMLElement) {
+export function getComputedStyle (element:Element|HTMLElement) {
     const ownerDocument = element.ownerDocument
 
     if (!ownerDocument || !ownerDocument.defaultView) {
@@ -62,7 +81,7 @@ function getComputedStyle (element:Element|HTMLElement) {
  * @param {Element} [previousElement]
  * @returns {boolean}
  */
-function isAttributeVisible (element:Element, previousElement?:Element):boolean {
+export function isAttributeVisible (element:Element, previousElement?:Element):boolean {
     return (
         !element.hasAttribute('hidden') &&
     (element.nodeName === 'DETAILS' && previousElement?.nodeName !== 'SUMMARY'
@@ -79,7 +98,7 @@ function isAttributeVisible (element:Element, previousElement?:Element):boolean 
  * @param {Element} [previousElement]
  * @returns {boolean}
  */
-function isElementVisible (
+export function isElementVisible (
     element:Element,
     previousElement?:Element
 ):boolean {
@@ -103,7 +122,7 @@ function isElementVisible (
  *    regex?: RegExp
  * }} args
  */
-function waitForText (args:{
+export function waitForText (args:{
     text?:string,
     timeout?:number,
     element:Element,
@@ -182,8 +201,12 @@ function waitForText (args:{
  *    timeout?: number // how long to wait
  * }} args
  * @param {() => HTMLElement |  null | undefined} [lambda]
+ * @throws {Error} - Throws an error if neither `lambda` nor `selector`
+ * is provided.
+ * @throws {Error} - Throws an error if the element is not found within
+ * the timeout.
  */
-function waitFor (args:{
+export function waitFor (args:{
     selector?:string,
     visible?:boolean,
     timeout?:number
@@ -232,8 +255,8 @@ function waitFor (args:{
  *
  * @param {Element} element
  */
-function click (element:Element) {
-    domEvent({
+export function click (element:Element) {
+    event({
         event: new window.MouseEvent('click', {
             bubbles: true,
             cancelable: true,
@@ -251,7 +274,7 @@ function click (element:Element) {
  *   element?: HTMLElement | Element | typeof window
  * }} args
  */
-function domEvent (args:{
+export function event (args:{
     event:string|Event;
     element?:HTMLElement|Element|typeof window
 }) {

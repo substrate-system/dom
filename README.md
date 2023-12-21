@@ -48,12 +48,14 @@ function waitFor (args:{
 
 #### example
 ```js
-const foundElement = await dom.waitFor({
+import { waitFor } from '@nichoth/dom'
+
+const foundElement = await waitFor({
     selector: 'p'
 })
 
 // or pass in a string to use as a query selector
-const el = await dom.waitFor('#my-element)
+const el = await waitFor('#my-element)
 ```
 
 ### dom.waitForText
@@ -71,7 +73,9 @@ function waitForText (args:{
 
 #### example
 ```js
-const el = await dom.waitForText({
+import { waitForText } from '@nichoth/dom'
+
+const el = await waitForText({
     element: document.body,
     regex: /bar/
 })
@@ -79,7 +83,7 @@ const el = await dom.waitForText({
 
 Pass in a parent element and timeout.
 ```js
-const found = await dom.waitForText({
+const found = await waitForText({
     element: dom.qs('#test-two'),
     multipleTags: true,
     text: 'bbb',
@@ -92,6 +96,8 @@ Dispatch a click event from the given element.
 
 ```js
 import { dom } from '@nichoth/dom'
+// or import { click } from '@nichoth/dom'
+
 dom.click(dom.qs('#my-element'))
 ```
 
@@ -102,6 +108,20 @@ Dispatch an event from an element.
 import { dom } from '@nichoth/dom'
 
 dom.event('hello-event', dom.qs('#example'))
+```
+
+### sleep
+Wait for the given milliseconds.
+
+```ts
+async function sleep (ms:number):Promise<void>
+```
+
+#### example
+```js
+import { sleep } from '@nichoth/dom'
+
+await sleep(3000)
 ```
 
 ## credits
