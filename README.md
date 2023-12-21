@@ -1,10 +1,10 @@
-# test dom
+# dom
 ![tests](https://github.com/nichoth/dom/actions/workflows/nodejs.yml/badge.svg)
 [![types](https://img.shields.io/npm/types/@nichoth/dom)](README.md)
 [![module](https://img.shields.io/badge/module-ESM%2FCJS-blue)](README.md)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen)](LICENSE)
 
-Helpers for working with the DOM.
+Helpers for working with the DOM, useful for tests.
 
 ## install
 ```sh
