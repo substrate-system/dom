@@ -16,6 +16,8 @@ export const dom = {
     qsa,
 }
 
+export default dom
+
 /**
  * Sleeps for `ms` milliseconds.
  * @param {number} ms
