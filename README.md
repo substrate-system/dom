@@ -41,7 +41,7 @@ __`dom.qsa`__ is equal to `document.querySelectorAll`
 Look for a DOM element by slector. Default timeout is 5 seconds. Throws if the element is not found.
 
 ```ts
-export function waitFor (args:{
+function waitFor (args:{
     selector?:string,
     visible?:boolean,
     timeout?:number
@@ -57,7 +57,7 @@ const foundElement = await waitFor({
 })
 
 // or pass in a string to use as a query selector
-const el = await waitFor('#my-element)
+const el = await waitFor('#my-element')
 ```
 
 ### dom.waitForText
