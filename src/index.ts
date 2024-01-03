@@ -282,7 +282,7 @@ export function click (element:Element) {
 export function event (args:{
     event:string|Event;
     element?:HTMLElement|Element|typeof window
-}) {
+}):void {
     let {
         event,
         element = window

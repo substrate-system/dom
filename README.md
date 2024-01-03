@@ -106,10 +106,18 @@ dom.click(dom.qs('#my-element'))
 ### event
 Dispatch an event from an element.
 
+```ts
+function event (args:{
+    event:string|Event;
+    element?:HTMLElement|Element|typeof window
+}):void
+```
+
+#### event example
 ```js
 import { dom } from '@nichoth/dom'
 
-dom.event('hello-event', dom.qs('#example'))
+dom.event({ event: 'hello', element: dom.qs('#example') })
 ```
 
 ### sleep
@@ -119,7 +127,7 @@ Wait for the given milliseconds.
 async function sleep (ms:number):Promise<void>
 ```
 
-#### example
+#### sleep example
 ```js
 import { sleep } from '@nichoth/dom'
 
