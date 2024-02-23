@@ -11,7 +11,7 @@ test('dom.waitFor', async t => {
         selector: 'p'
     })
 
-    t.equal(foundP.textContent, 'testing', 'should find the element')
+    t.equal(foundP!.textContent, 'testing', 'should find the element')
 
     // wait a bit, then add the element
     setTimeout(() => {
@@ -26,7 +26,7 @@ test('dom.waitFor', async t => {
         selector: '#foo'
     })
 
-    t.equal(el.textContent, 'bar', 'should find the element after waiting')
+    t.equal(el!.textContent, 'bar', 'should find the element after waiting')
 })
 
 test('call waitFor with a string', async t => {
@@ -36,7 +36,7 @@ test('call waitFor with a string', async t => {
 
 test('dom.click', async t => {
     const p = await dom.waitFor({ selector: 'p' })
-    dom.click(p)
+    dom.click(p!)
 })
 
 test('dom.waitForText', async t => {
@@ -152,7 +152,7 @@ test('match a middle section of text', async t => {
             multipleTags: true,
             timeout: 1000
         })
-        t.ok(dom.isElementVisible(el), 'should find the element')
+        t.ok(dom.isElementVisible(el!), 'should find the element')
     } catch (err) {
         t.fail((err as Error).toString())
     }
@@ -167,7 +167,7 @@ test('return value for multipleTags', async t => {
             timeout: 1000
         })
 
-        t.equal(match.getAttribute('id'), 'test-el',
+        t.equal(match!.getAttribute('id'), 'test-el',
             'should return the parent element')
     } catch (err) {
         t.fail((err as Error).toString())
@@ -198,7 +198,7 @@ test('another case for text + tags', async t => {
             text: 'aaa',
             timeout: 1000
         })
-        t.ok(dom.isElementVisible(aaa), 'found the first string')
+        t.ok(dom.isElementVisible(aaa!), 'found the first string')
     } catch (err) {
         t.fail((err as Error).toString())
     }
@@ -211,7 +211,7 @@ test('another case for text + tags', async t => {
             timeout: 1000
         })
 
-        t.ok(dom.isElementVisible(found), 'should find "bbb" string')
+        t.ok(dom.isElementVisible(found!), 'should find "bbb" string')
     } catch (err) {
         t.fail((err as Error).toString())
     }
