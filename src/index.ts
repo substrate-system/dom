@@ -130,7 +130,7 @@ export function waitForText (args:{
     element:Element,
     multipleTags?:boolean,
     regex?:RegExp
-}):Promise<Element> {
+}):Promise<Element|null> {
     return waitFor({
         timeout: args.timeout
     }, () => {
@@ -209,13 +209,13 @@ export function waitForText (args:{
  * is provided.
  * @throws {Error} - Throws an error if the element is not found within
  * the timeout.
- * @returns {Element} The HTML element
+ * @returns {Element|null} The HTML element
  */
 export function waitFor (args:{
     selector?:string,
     visible?:boolean,
     timeout?:number
-}|string, lambda?:() => Element|null):Promise<Element> {
+}|string, lambda?:() => Element|null):Promise<Element|null> {
     let selector:string
     let visible:boolean = true
     let timeout = DEFAULT_TIMEOUT
