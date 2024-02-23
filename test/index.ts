@@ -11,7 +11,15 @@ test('dom.waitFor', async t => {
         selector: 'p'
     })
 
-    t.equal(foundP!.textContent, 'testing', 'should find the element')
+    t.equal(foundP!.textContent, 'testing', 'should find the element by tag')
+
+    const a = document.body.appendChild(document.createElement('a'))
+    a.id = 'hello'
+    a.textContent = 'hello'
+
+    const foundA = await dom.waitFor({ selector: '#hello' })
+    t.ok(foundA, 'should find an element by ID')
+    t.equal(foundA?.textContent, 'hello', 'should find the right element by ID')
 
     // wait a bit, then add the element
     setTimeout(() => {
