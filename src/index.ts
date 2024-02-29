@@ -204,7 +204,7 @@ export function waitForText (args:{
  *    visible?: boolean, // the element needs to be visible
  *    timeout?: number // how long to wait
  * }|string} args
- * @param {() => HTMLElement | null} [lambda]
+ * @param {() => HTMLElement | null} [lambda] [lambda]
  * @throws {Error} - Throws an error if neither `lambda` nor `selector`
  * is provided.
  * @throws {Error} - Throws an error if the element is not found within
