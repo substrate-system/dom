@@ -13,6 +13,10 @@ test('dom.waitFor', async t => {
 
     t.equal(foundP!.textContent, 'testing', 'should find the element by tag')
 
+    const pViaString = await dom.waitFor('p')
+    t.equal(pViaString!.textContent, 'testing',
+        'should take a string selector as arg')
+
     const a = document.body.appendChild(document.createElement('a'))
     a.id = 'hello'
     a.textContent = 'hello'
