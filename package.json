@@ -3,7 +3,7 @@
   "description": "Helpers for working with the DOM",
   "private": false,
   "type": "module",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "main": "dist/index.js",
   "files": [
     "./dist/*"
