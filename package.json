@@ -1,5 +1,5 @@
 {
-  "name": "@nichoth/dom",
+  "name": "@bicycle-codes/dom",
   "description": "Helpers for working with the DOM",
   "private": false,
   "type": "module",
