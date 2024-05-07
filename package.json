@@ -21,7 +21,7 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@nichoth/tapzero": "^0.8.4",
+    "@bicycle-codes/tapzero": "^0.8.4",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.1.0",
     "auto-changelog": "^2.4.0",
@@ -50,20 +50,20 @@
     }
   },
   "author": "nichoth <nichoth@gmail.com> (https://nichoth.com)",
-  "license": "MIT",
   "directories": {
     "test": "test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nichoth/dom.git"
+    "url": "git+https://github.com/bicycle-codes/dom.git"
   },
   "keywords": [
     "test",
     "dom"
   ],
   "bugs": {
-    "url": "https://github.com/nichoth/dom/issues"
+    "url": "https://github.com/bicycle-codes/dom/issues"
   },
-  "homepage": "https://github.com/nichoth/dom#readme"
+  "homepage": "https://github.com/bicycle-codes/dom#readme",
+  "license": "MIT"
 }
