@@ -1,5 +1,5 @@
 import { dom } from '../src/index.js'
-import { test } from '@nichoth/tapzero'
+import { test } from '@bicycle-codes/tapzero'
 import { Terminal } from 'xterm'
 
 test('dom.waitFor', async t => {
