@@ -1,30 +1,32 @@
 # dom
-![tests](https://github.com/nichoth/dom/actions/workflows/nodejs.yml/badge.svg)
-[![Socket Badge](https://socket.dev/api/badge/npm/package/@nichoth/dom)](https://socket.dev/npm/package/@nichoth/dom)
-[![types](https://img.shields.io/npm/types/@nichoth/dom)](README.md)
-[![module](https://img.shields.io/badge/module-ESM%2FCJS-blue)](README.md)
-[![license](https://img.shields.io/badge/license-MIT-brightgreen)](LICENSE)
+![tests](https://github.com/bicycle-codes/dom/actions/workflows/nodejs.yml/badge.svg)
+[![Socket Badge](https://socket.dev/api/badge/npm/package/@bicycle-codes/dom)](https://socket.dev/npm/package/@bicycle-codes/dom)
+[![types](https://img.shields.io/npm/types/msgpackr?style=flat-square)](README.md)
+[![module](https://img.shields.io/badge/module-ESM%2FCJS-blue?style=flat-square)](README.md)
+[![license](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 Helpers for working with the DOM, useful for tests.
 
+[Read the docs](https://bicycle-codes.github.io/dom/)
+
 ## install
 ```sh
-npm i -D @nichoth/dom
+npm i -D @bicycle-codes/dom
 ```
 
 ## use
 
 ### import
 ```js
-import { dom } from '@nichoth/dom'
+import { dom } from '@bicycle-codes/dom'
 
 // or import individual functions
-import { waitFor } from '@nichoth/dom'
+import { waitFor } from '@bicycle-codes/dom'
 ```
 
 ### require
 ```js
-const dom = require('@nichoth/dom').dom
+const dom = require('@bicycle-codes/dom').dom
 ```
 
 ## API
@@ -50,7 +52,7 @@ function waitFor (args:{
 
 #### example
 ```js
-import { waitFor } from '@nichoth/dom'
+import { waitFor } from '@bicycle-codes/dom'
 
 const foundElement = await waitFor({
     selector: 'p'
@@ -75,7 +77,7 @@ function waitForText (args:{
 
 #### example
 ```js
-import { waitForText } from '@nichoth/dom'
+import { waitForText } from '@bicycle-codes/dom'
 
 const el = await waitForText({
     element: document.body,
@@ -97,8 +99,8 @@ const found = await waitForText({
 Dispatch a click event from the given element.
 
 ```js
-import { dom } from '@nichoth/dom'
-// or import { click } from '@nichoth/dom'
+import { dom } from '@bicycle-codes/dom'
+// or import { click } from '@bicycle-codes/dom'
 
 dom.click(dom.qs('#my-element'))
 ```
@@ -115,7 +117,7 @@ function event (args:{
 
 #### event example
 ```js
-import { dom } from '@nichoth/dom'
+import { dom } from '@bicycle-codes/dom'
 
 dom.event({ event: 'hello', element: dom.qs('#example') })
 ```
@@ -129,7 +131,7 @@ async function sleep (ms:number):Promise<void>
 
 #### sleep example
 ```js
-import { sleep } from '@nichoth/dom'
+import { sleep } from '@bicycle-codes/dom'
 
 await sleep(3000)  // wait 3 seconds
 ```
