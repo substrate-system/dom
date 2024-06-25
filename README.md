@@ -1,6 +1,5 @@
 # dom
 ![tests](https://github.com/bicycle-codes/dom/actions/workflows/nodejs.yml/badge.svg)
-[![Socket Badge](https://socket.dev/api/badge/npm/package/@bicycle-codes/dom)](https://socket.dev/npm/package/@bicycle-codes/dom)
 [![types](https://img.shields.io/npm/types/msgpackr?style=flat-square)](README.md)
 [![module](https://img.shields.io/badge/module-ESM%2FCJS-blue?style=flat-square)](README.md)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
