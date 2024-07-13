@@ -209,13 +209,14 @@ export function waitForText (args:{
  * is provided.
  * @throws {Error} - Throws an error if the element is not found within
  * the timeout.
- * @returns {Element|null} The HTML element
+ * @returns {HTMLElement|null} The HTML element
  */
-export function waitFor (args:{
+export function waitFor <T extends (keyof HTMLElementTagNameMap)> (args:{
     selector?:string,
     visible?:boolean,
     timeout?:number
-}|string, lambda?:() => Element|null):Promise<Element|null> {
+// }|string, lambda?:() => Element|null):Promise<Element|null> {
+}|string, lambda?:() => HTMLElement|null):Promise<ReturnType<typeof document.querySelector<T>>> {
     let selector:string
     let visible:boolean = true
     let timeout = DEFAULT_TIMEOUT
@@ -258,9 +259,9 @@ export function waitFor (args:{
 /**
  * Click the given element.
  *
- * @param {Element} element
+ * @param {HTMLElement} element
  */
-export function click (element:Element) {
+export function click (element:HTMLElement) {
     event({
         event: new window.MouseEvent('click', {
             bubbles: true,
