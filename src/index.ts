@@ -131,70 +131,73 @@ export function waitForText (args:{
     multipleTags?:boolean,
     regex?:RegExp
 }):Promise<Element|null> {
-    return waitFor({
-        timeout: args.timeout
-    }, () => {
-        const {
-            element,
-            text,
-            regex,
-            multipleTags
-        } = args
+    return waitFor(
+        { timeout: args.timeout },
+        () => {
+            const {
+                element,
+                text,
+                regex,
+                multipleTags
+            } = args
 
-        const elems:Element[] = []
+            const elems:Element[] = []
 
-        let maxLoop = 10000
-        const stack:Element[] = [element]
-        // Walk the DOM tree breadth first and build up a list of
-        // elements with the leafs last.
-        while (stack.length > 0 && maxLoop-- >= 0) {
-            const current = stack.pop()
-            if (current && current.children.length > 0) {
-                stack.push(...current.children)
-                elems.push(...current.children)
-            }
-        }
-
-        // Loop over children in reverse to scan the LEAF nodes first.
-        let match:HTMLElement|null = null
-        for (let i = elems.length - 1; i >= 0; i--) {
-            const node = elems[i]
-            if (!node.textContent) continue
-
-            if (regex && regex.test(node.textContent)) {
-                return node
+            let maxLoop = 10000
+            const stack:Element[] = [element]
+            // Walk the DOM tree breadth first and build up a list of
+            // elements with the leafs last.
+            while (stack.length > 0 && maxLoop-- >= 0) {
+                const current = stack.pop()
+                if (current && current.children.length > 0) {
+                    stack.push(...current.children)
+                    elems.push(...current.children)
+                }
             }
 
-            if (text && node.textContent?.includes(text)) {
-                return node
-            }
+            // Loop over children in reverse to scan the LEAF nodes first.
+            let match:HTMLElement|null = null
+            for (let i = elems.length - 1; i >= 0; i--) {
+                const node = elems[i]
+                if (!node.textContent) continue
 
-            if (text && multipleTags) {
-                if (text[0] !== (node.textContent)[0]) continue
+                if (regex && regex.test(node.textContent)) {
+                    return node
+                }
 
-                // if equal, check the sibling nodes
-                let sibling = node.nextSibling
-                let i = 1
+                if (text && node.textContent?.includes(text)) {
+                    return node
+                }
 
-                // while there is a potential match, keep checking the siblings
-                while (i < text.length) {
-                    if (sibling && (sibling.textContent === text[i])) {
-                        // is equal still, check the next sibling
-                        sibling = sibling.nextSibling
-                        i++
-                        match = node.parentElement
-                    } else {
-                        if (i === (text.length - 1)) return node.parentElement
-                        match = null
-                        break
+                if (text && multipleTags) {
+                    if (text[0] !== (node.textContent)[0]) continue
+
+                    // if equal, check the sibling nodes
+                    let sibling = node.nextSibling
+                    let i = 1
+
+                    // while there is a potential match, keep checking the siblings
+                    while (i < text.length) {
+                        if (sibling && (sibling.textContent === text[i])) {
+                            // is equal still, check the next sibling
+                            sibling = sibling.nextSibling
+                            i++
+                            match = node.parentElement
+                        } else {
+                            if (i === (text.length - 1)) return node.parentElement
+                            match = null
+                            break
+                        }
                     }
                 }
             }
-        }
 
-        return match
-    })
+            return match
+        }
+    )
 }
+
+type Lambda = () => Element|null
 
 /**
  * Find an element
@@ -204,19 +207,21 @@ export function waitForText (args:{
  *    visible?: boolean, // the element needs to be visible
  *    timeout?: number // how long to wait
  * }|string} args
- * @param {() => HTMLElement | null} [lambda] [lambda]
+ * @param {() => Element|null} [lambda] A function to match an element
  * @throws {Error} - Throws an error if neither `lambda` nor `selector`
  * is provided.
  * @throws {Error} - Throws an error if the element is not found within
  * the timeout.
- * @returns {HTMLElement|null} The HTML element
+ * @returns {Element|null} The HTML element
  */
-export function waitFor <T extends (keyof HTMLElementTagNameMap)> (args:{
-    selector?:string,
-    visible?:boolean,
-    timeout?:number
-// }|string, lambda?:() => Element|null):Promise<Element|null> {
-}|string, lambda?:() => HTMLElement|null):Promise<ReturnType<typeof document.querySelector<T>>> {
+export function waitFor (
+    args:{
+        selector?:string,
+        visible?:boolean,
+        timeout?:number
+    }|string,
+    lambda?:Lambda
+):Promise<Element|null> {
     let selector:string
     let visible:boolean = true
     let timeout = DEFAULT_TIMEOUT

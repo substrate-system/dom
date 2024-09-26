@@ -48,7 +48,8 @@ test('call waitFor with a string', async t => {
 
 test('dom.click', async t => {
     const p = await dom.waitFor({ selector: 'p' })
-    dom.click(p!)
+    dom.click(p as HTMLElement)
+    t.ok('does not throw')
 })
 
 test('dom.waitForText', async t => {
@@ -204,8 +205,7 @@ test('another case for text + tags', async t => {
 
     try {
         const aaa = await dom.waitForText({
-            // @ts-ignore
-            element: document.getElementById('test-two'),
+            element: document.getElementById('test-two') as HTMLElement,
             multipleTags: true,
             text: 'aaa',
             timeout: 1000
