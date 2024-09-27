@@ -130,16 +130,30 @@ export function waitForText (args:{
     element:Element,
     multipleTags?:boolean,
     regex?:RegExp
-}):Promise<Element|null> {
+}|string):Promise<Element|null> {
+    let opts:{
+        text?:string;
+        timeout?:number;
+        element:Element;
+        multipleTags?:boolean;
+        regex?:RegExp
+    }
+
+    if (typeof args === 'string') {
+        opts = { text: args, element: document.body }
+    } else {
+        opts = args
+    }
+
     return waitFor(
-        { timeout: args.timeout },
+        { timeout: opts.timeout },
         () => {
             const {
                 element,
                 text,
                 regex,
                 multipleTags
-            } = args
+            } = opts
 
             const elems:Element[] = []
 
@@ -200,7 +214,7 @@ export function waitForText (args:{
 type Lambda = () => Element|null
 
 /**
- * Find an element
+ * Find an element by query selector.
  *
  * @param {{
  *    selector?: string,
