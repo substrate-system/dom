@@ -277,17 +277,17 @@ export function waitFor (
 }
 
 /**
-   * Dispatch the `click`` method on an element specified by selector.
-   *
-   * @param {string|Element} selector - A CSS selector string, or
-   *   an instance of an HTMLElement.
-   * @returns {Promise<void>}
-   *
-   * @example
-   * ```js
-   * await click('.class button', 'Click a button')
-   * ```
-   */
+ * Dispatch the `click`` method on an element specified by selector.
+ *
+ * @param {string|Element} selector - A CSS selector string, or
+ *   an instance of an HTMLElement.
+ * @returns {Promise<void>}
+ *
+ * @example
+ * ```js
+ * await click('.class button', 'Click a button')
+ * ```
+ */
 export async function click (selector:Element|string):Promise<void> {
     const element = toElement(selector)
 
