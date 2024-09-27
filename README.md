@@ -151,4 +151,4 @@ export async function type (
 
 ## credits
 
-Thanks Jake Verbaten for writing this originally.
+Thanks [@raynos](https://github.com/raynos/) for writing this originally.
