@@ -1,4 +1,4 @@
-import { dom } from '../src/index.js'
+import { dom, waitForText } from '../src/index.js'
 import { test } from '@bicycle-codes/tapzero'
 import { Terminal } from 'xterm'
 
@@ -250,4 +250,9 @@ test('dom.event', t => {
         }),
         element: dom.qs('#test-two')!
     })
+})
+
+test('waitForText', async t => {
+    const text = await waitForText('testing')
+    t.ok(text instanceof HTMLElement, 'should find the p tag given a string')
 })
