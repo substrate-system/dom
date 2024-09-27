@@ -277,19 +277,26 @@ export function waitFor (
 }
 
 /**
- * Click the given element.
- *
- * @param {Element} element
- */
-export function click (element:Element) {
-    event({
-        event: new window.MouseEvent('click', {
-            bubbles: true,
-            cancelable: true,
-            button: 0
-        }),
-        element
-    })
+   * Dispatch the `click`` method on an element specified by selector.
+   *
+   * @param {string|HTMLElement|Element} selector - A CSS selector string, or
+   *   an instance of an HTMLElement.
+   * @returns {Promise<void>}
+   *
+   * @example
+   * ```js
+   * await t.click('.class button', 'Click a button')
+   * ```
+   */
+export async function click (selector:HTMLElement|Element|string):Promise<void> {
+    const el = toElement(selector) as HTMLElement
+
+    if (globalThis.HTMLElement && !(el instanceof globalThis.HTMLElement)) {
+        throw new Error('selector needs to be instance of HTMLElement or resolve to one')
+    }
+
+    el!.click()
+    await requestAnimationFrame()
 }
 
 /**

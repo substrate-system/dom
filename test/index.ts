@@ -48,7 +48,7 @@ test('call waitFor with a string', async t => {
 
 test('dom.click', async t => {
     const p = await dom.waitFor({ selector: 'p' })
-    dom.click(p as HTMLElement)
+    await dom.click(p as HTMLElement)
     t.ok('does not throw')
 })
 
