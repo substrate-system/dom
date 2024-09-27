@@ -310,8 +310,9 @@ export async function click (selector:Element|string):Promise<void> {
  *   converted to a CustomEvent or not an instance of Event.
  */
 export function event (
-    event:string|InstanceType<typeof Event>|InstanceType<typeof CustomEvent<any>>,
-    element?:Element|Window
+    event:CustomEvent|Event|string,
+    // event:string|InstanceType<typeof Event>|InstanceType<typeof CustomEvent<any>>,
+    element?:Element|Window|null
 ):void {
     element = (element instanceof Window ? element : toElement(element))
 

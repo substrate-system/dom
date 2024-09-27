@@ -13,7 +13,7 @@
  *
  */
 export function toElement (
-    _selector?:string|HTMLElement|Element
+    _selector?:string|HTMLElement|Element|null
 ):Element|InstanceType<typeof Window> {
     if (!_selector) return window
 
