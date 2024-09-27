@@ -279,48 +279,50 @@ export function waitFor (
 /**
    * Dispatch the `click`` method on an element specified by selector.
    *
-   * @param {string|HTMLElement|Element} selector - A CSS selector string, or
+   * @param {string|Element} selector - A CSS selector string, or
    *   an instance of an HTMLElement.
    * @returns {Promise<void>}
    *
    * @example
    * ```js
-   * await t.click('.class button', 'Click a button')
+   * await click('.class button', 'Click a button')
    * ```
    */
-export async function click (selector:HTMLElement|Element|string):Promise<void> {
-    const el = toElement(selector) as HTMLElement
+export async function click (selector:Element|string):Promise<void> {
+    const element = toElement(selector)
 
-    if (globalThis.HTMLElement && !(el instanceof globalThis.HTMLElement)) {
-        throw new Error('selector needs to be instance of HTMLElement or resolve to one')
-    }
+    event(new globalThis.MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        button: 0
+    }), element)
 
-    el!.click()
     await requestAnimationFrame()
 }
 
 /**
- * Dispatch an event from the given element.
+ * @param {string|Event} event  The event to dispatch
+ * @param {Element|window} [element] - The element to dispatch from, or
+ *   will use `window` if none given.
+ * @returns {void}
  *
- * @param {{
- *   event: string | Event,
- *   element?: HTMLElement | Element | typeof window
- * }} args
+ * @throws {Error} Throws an error if the `event` is not a string that can be
+ *   converted to a CustomEvent or not an instance of Event.
  */
-export function event (args:{
-    event:string|Event;
-    element?:HTMLElement|Element|typeof window
-}):void {
-    let {
-        event,
-        element = window
-    } = args
+export function event (
+    event:string|InstanceType<typeof Event>|InstanceType<typeof CustomEvent<any>>,
+    element?:Element|Window
+):void {
+    element = (element instanceof Window ? element : toElement(element))
 
     if (typeof event === 'string') {
-        event = new window.CustomEvent(event)
+        event = new globalThis.CustomEvent(event)
     }
 
-    if (typeof event !== 'object') {
+    if (
+        !(event instanceof Event) &&
+        !((event as any) instanceof CustomEvent)
+    ) {
         throw new Error('event should be of type Event')
     }
 

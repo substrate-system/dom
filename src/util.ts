@@ -12,8 +12,13 @@
  *   HTMLElement, Element, or Window.
  *
  */
-export function toElement (_selector:string|HTMLElement|Element) {
+export function toElement (
+    _selector?:string|HTMLElement|Element
+):Element|InstanceType<typeof Window> {
+    if (!_selector) return window
+
     let selector:string|Element|null = _selector
+
     if (globalThis.document) {
         if (typeof selector === 'string') {
             selector = globalThis.document.querySelector(selector)
@@ -28,6 +33,8 @@ export function toElement (_selector:string|HTMLElement|Element) {
         }
 
         return selector
+    } else {
+        return window
     }
 }
 

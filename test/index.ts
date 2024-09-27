@@ -233,23 +233,23 @@ test('dom.event', t => {
     t.plan(3)
 
     dom.qs('#test-two')!.addEventListener('hello', ev => {
-        t.ok(ev, 'should get the event')
+        t.ok(ev, 'should get the custom event')
     })
 
     dom.qs('#test-two')!.addEventListener('testing-event', (ev) => {
-        t.ok(ev, 'should get another event')
+        t.ok(ev, 'should get another custom event')
         t.equal((ev as CustomEvent).detail, 'test',
-            'has the right event properties')
+            'Can pass in properties to customize the event')
     })
 
-    dom.event({ event: 'hello', element: dom.qs('#test-two')! })
-    dom.event({
-        event: new CustomEvent('testing-event', {
+    dom.event('hello', dom.qs('#test-two')!)
+    dom.event(
+        new CustomEvent('testing-event', {
             bubbles: true,
             detail: 'test'
         }),
-        element: dom.qs('#test-two')!
-    })
+        dom.qs('#test-two')!
+    )
 })
 
 test('waitForText', async t => {
