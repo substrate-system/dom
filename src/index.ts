@@ -280,7 +280,7 @@ export function waitFor (
  *
  * @param {HTMLElement} element
  */
-export function click (element:HTMLElement) {
+export function click (element:Element) {
     event({
         event: new window.MouseEvent('click', {
             bubbles: true,
