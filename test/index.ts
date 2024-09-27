@@ -1,4 +1,4 @@
-import { dom, waitForText } from '../src/index.js'
+import { dom, qs, waitForText, type } from '../src/index.js'
 import { test } from '@bicycle-codes/tapzero'
 import { Terminal } from 'xterm'
 
@@ -255,4 +255,15 @@ test('dom.event', t => {
 test('waitForText', async t => {
     const text = await waitForText('testing')
     t.ok(text instanceof HTMLElement, 'should find the p tag given a string')
+})
+
+test('type', async t => {
+    t.plan(11)
+    const input = qs('#test-input')
+    t.plan(11)
+    input?.addEventListener('input', ev => {
+        t.ok(ev, 'should dispatch an "input" event 11 times, once for each key')
+    })
+
+    await type('#test-input', 'hello world')
 })

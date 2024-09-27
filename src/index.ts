@@ -1,3 +1,4 @@
+import { toElement, requestAnimationFrame } from './util.js'
 export const qs = document.querySelector.bind(document)
 export const qsa = document.querySelectorAll.bind(document)
 
@@ -122,7 +123,7 @@ export function isElementVisible (
  *    element: Element,
  *    multipleTags?: boolean,
  *    regex?: RegExp
- * }} args
+ * }|string} args
  */
 export function waitForText (args:{
     text?:string,
@@ -147,7 +148,7 @@ export function waitForText (args:{
 
     return waitFor(
         { timeout: opts.timeout },
-        () => {
+        () => {  // the lambda
             const {
                 element,
                 text,
@@ -237,7 +238,7 @@ export function waitFor (
     lambda?:Lambda
 ):Promise<Element|null> {
     let selector:string
-    let visible:boolean = true
+    let visible:boolean
     let timeout = DEFAULT_TIMEOUT
     if (typeof args === 'string') {
         selector = args
@@ -278,7 +279,7 @@ export function waitFor (
 /**
  * Click the given element.
  *
- * @param {HTMLElement} element
+ * @param {Element} element
  */
 export function click (element:Element) {
     event({
@@ -317,4 +318,39 @@ export function event (args:{
     }
 
     element.dispatchEvent(event)
+}
+
+/**
+ * Type the given value into the element, emitting all relevant events, to
+ * simulate a user typing with a keyboard.
+ *
+ * @param {string|HTMLElement|Element} selector - A CSS selector string, or an instance of HTMLElement, or Element.
+ * @param {string} value - The string to type into the :focus element.
+ * @returns {Promise<void>}
+ *
+ * @example
+ * ```js
+ * await type('#my-div', 'Hello World')
+ * ```
+ */
+export async function type (
+    selector:string|HTMLElement|Element,
+    value:string,
+):Promise<void> {
+    const el = toElement(selector)
+
+    if (!('value' in el!)) throw new Error('Element missing value attribute')
+
+    for (const c of value.split('')) {
+        await requestAnimationFrame()
+        el.value = el.value != null ? el.value + c : c
+        el.dispatchEvent(
+            new Event('input', {
+                bubbles: true,
+                cancelable: true
+            })
+        )
+    }
+
+    await requestAnimationFrame()
 }

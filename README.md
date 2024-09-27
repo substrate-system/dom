@@ -137,6 +137,18 @@ import { sleep } from '@bicycle-codes/dom'
 await sleep(3000)  // wait 3 seconds
 ```
 
+### type
+```ts
+export async function type (
+    selector:string|HTMLElement|Element,
+    value:string,
+):Promise<void>
+```
+
+#### example
+```js
+```
+
 ## credits
 
 Thanks Jake Verbaten for writing this originally.
