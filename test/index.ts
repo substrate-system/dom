@@ -1,6 +1,12 @@
-import { dom, qs, waitForText, type } from '../src/index.js'
+import { byId, dom, qs, waitForText, type } from '../src/index.js'
 import { test } from '@bicycle-codes/tapzero'
 import { Terminal } from 'xterm'
+
+test('byId', t => {
+    t.plan(1)
+    const el = byId('id-test')
+    t.ok(el, 'should get an element by ID')
+})
 
 test('dom.waitFor', async t => {
     const p = document.createElement('p')
