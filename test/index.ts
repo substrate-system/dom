@@ -48,18 +48,33 @@ test('call waitFor with a string', async t => {
 
 test('dom.click', async t => {
     const p = await dom.waitFor({ selector: 'p' })
+    p?.addEventListener('click', function listener (ev) {
+        t.ok(ev instanceof MouseEvent,
+            'should get a click event given an element')
+
+        p.removeEventListener('click', listener)
+    })
     await dom.click(p as HTMLElement)
-    t.ok('does not throw')
+
+    p?.addEventListener('click', ev => {
+        t.ok(ev instanceof MouseEvent,
+            'should get a click event given a strig selector')
+        t.ok(ev, 'should got a click event given a string selector')
+    })
+
+    dom.click('p')
 })
 
 test('dom.waitForText', async t => {
     // use the element we created previously
     const el = await dom.waitForText({
-        element: document.body,
         regex: /bar/
-    })
+    }, document.body)
 
     t.ok(el, 'should find by text content')
+
+    const elAgain = await dom.waitForText('bar')
+    t.ok(elAgain, 'should find an element given text only')
 })
 
 test('multiple tags', async t => {
@@ -76,14 +91,12 @@ test('multiple tags', async t => {
     terminal.open(el)
 
     const found = await dom.waitForText({
-        element: el,
         multipleTags: true,
         text: 'foo bar'
-    })
+    }, el)
     t.ok(found, 'should find text split into multiple tags')
 
     const text = await dom.waitForText({
-        element: document.body,
         multipleTags: true,
         text: 'baz'
     })
@@ -103,11 +116,10 @@ test('more multiple tags', async t => {
 
     try {
         const quux = await dom.waitForText({
-            element: testEl,
             text: 'quux',
             multipleTags: true,
             timeout: 1000
-        })
+        }, testEl)
 
         t.ok(quux, 'should find the test in separate tags')
     } catch (err) {
@@ -118,7 +130,6 @@ test('more multiple tags', async t => {
 test('return value for non-existant text', async t => {
     try {
         await dom.waitForText({
-            element: document.body,
             text: 'non existant',
             multipleTags: true,
             timeout: 1000
@@ -132,7 +143,6 @@ test('return value for non-existant text', async t => {
 test('partially matching text', async t => {
     try {
         await dom.waitForText({
-            element: document.body,
             text: 'quzz',
             multipleTags: true,
             timeout: 1000
@@ -146,7 +156,6 @@ test('partially matching text', async t => {
 test('another partial match', async t => {
     try {
         await dom.waitForText({
-            element: document.body,
             text: 'quuxaa',
             multipleTags: true,
             timeout: 1000
@@ -160,7 +169,6 @@ test('another partial match', async t => {
 test('match a middle section of text', async t => {
     try {
         const el = await dom.waitForText({
-            element: document.body,
             text: 'uux',
             multipleTags: true,
             timeout: 1000
@@ -174,7 +182,6 @@ test('match a middle section of text', async t => {
 test('return value for multipleTags', async t => {
     try {
         const match = await dom.waitForText({
-            element: document.body,
             text: 'uux',
             multipleTags: true,
             timeout: 1000
@@ -205,11 +212,10 @@ test('another case for text + tags', async t => {
 
     try {
         const aaa = await dom.waitForText({
-            element: document.getElementById('test-two') as HTMLElement,
             multipleTags: true,
             text: 'aaa',
             timeout: 1000
-        })
+        }, dom.byId('test-two')!)
         t.ok(dom.isElementVisible(aaa!), 'found the first string')
     } catch (err) {
         t.fail((err as Error).toString())
@@ -217,11 +223,10 @@ test('another case for text + tags', async t => {
 
     try {
         const found = await dom.waitForText({
-            element: dom.qs('#test-two') as Element,
             multipleTags: true,
             text: 'bbb',
             timeout: 1000
-        })
+        }, dom.qs('#test-two')!)
 
         t.ok(dom.isElementVisible(found!), 'should find "bbb" string')
     } catch (err) {

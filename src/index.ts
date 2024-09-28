@@ -1,6 +1,7 @@
 import { toElement, requestAnimationFrame } from './util.js'
 export const qs = document.querySelector.bind(document)
 export const qsa = document.querySelectorAll.bind(document)
+export const byId = document.getElementById.bind(document)
 
 const SECOND = 1000
 const DEFAULT_TIMEOUT = (5 * SECOND)
@@ -15,6 +16,7 @@ export const dom = {
     sleep,
     qs,
     qsa,
+    byId
 }
 
 export default dom
@@ -125,13 +127,12 @@ export function isElementVisible (
  *    regex?: RegExp
  * }|string} args
  */
-export function waitForText (args:{
-    text?:string,
-    timeout?:number,
-    element:Element,
-    multipleTags?:boolean,
-    regex?:RegExp
-}|string):Promise<Element|null> {
+export function waitForText (args:Partial<{
+    text:string,
+    timeout:number,
+    multipleTags:boolean,
+    regex:RegExp
+}>|string, parentElement:Element = document.body):Promise<Element|null> {
     let opts:{
         text?:string;
         timeout?:number;
@@ -143,7 +144,7 @@ export function waitForText (args:{
     if (typeof args === 'string') {
         opts = { text: args, element: document.body }
     } else {
-        opts = args
+        opts = { ...args, element: parentElement }
     }
 
     return waitFor(
@@ -311,7 +312,6 @@ export async function click (selector:Element|string):Promise<void> {
  */
 export function event (
     event:CustomEvent|Event|string,
-    // event:string|InstanceType<typeof Event>|InstanceType<typeof CustomEvent<any>>,
     element?:Element|Window|null
 ):void {
     element = (element instanceof Window ? element : toElement(element))

@@ -38,20 +38,27 @@ __`dom.qs`__ points to `document.querySelector`
 
 __`dom.qsa`__ is equal to `document.querySelectorAll`
 
+__`dom.byId`__ is equal to `document.getElementById`
+
+
 -------
 
-### dom.waitFor
+
+### `waitFor`
 Look for a DOM element by slector. Default timeout is 5 seconds. Throws if the element is not found.
 
 ```ts
-function waitFor (args:{
-    selector?:string,
-    visible?:boolean,
-    timeout?:number
-}|string, lambda?:() => Element|null):Promise<Element>
+export function waitFor (
+    args:{
+        selector?:string,
+        visible?:boolean,
+        timeout?:number
+    }|string,
+    lambda?:() => Element|null
+):Promise<Element|null>
 ```
 
-#### example
+#### `waitFor` example
 ```js
 import { waitFor } from '@bicycle-codes/dom'
 
@@ -59,34 +66,45 @@ const foundElement = await waitFor({
     selector: 'p'
 })
 
-// or pass in a string to use as a query selector
+// or pass in a query selector string
 const el = await waitFor('#my-element')
 ```
 
-### dom.waitForText
+### `waitForText`
 Look for an element containing the given text, or that matches a given regex. Return the element if found. Default timeout is 5 seconds. Throws if the element is not found.
 
+Takes either an option object or a string of text.
+
 ```ts
-function waitForText (args:{
-    text?:string,
-    timeout?:number,
-    element:Element,
-    multipleTags?:boolean,
-    regex?:RegExp
-}):Promise<Element>
+function waitForText (args:Partial<{
+    text:string,
+    timeout:number,
+    multipleTags:boolean,
+    regex:RegExp
+}>|string, parentElement:Element = document.body):Promise<Element|null>
 ```
 
-#### example
+#### `waitForText` example
+
 ```js
 import { waitForText } from '@bicycle-codes/dom'
 
+// by default will search the document.body
 const el = await waitForText({
-    element: document.body,
     regex: /bar/
 })
 ```
 
-Pass in a parent element and timeout.
+##### Pass in a string selector
+Can pass in a string to search for. Will search the `document.body` by default.
+
+```js
+import { waitForText } from '@bicycle-codes/dom'
+
+const el = await dom.waitForText('bar')
+```
+
+##### Pass in a parent element and timeout.
 ```js
 const found = await waitForText({
     element: dom.qs('#test-two'),
@@ -96,57 +114,84 @@ const found = await waitForText({
 })
 ```
 
-### click
+### `click`
 Dispatch a click event from the given element.
+
+```ts
+async function click (selector:Element|string):Promise<void>
+```
+
+#### `click` example
 
 ```js
 import { dom } from '@bicycle-codes/dom'
 // or import { click } from '@bicycle-codes/dom'
 
 dom.click(dom.qs('#my-element'))
+
+// or pass a selector
+dom.click('#my-element')
 ```
 
-### event
-Dispatch an event from an element.
+### `event`
+Dispatch an event from an element. Will dispatch from `window` if no element is passed in.
 
 ```ts
-function event (args:{
-    event:string|Event;
-    element?:HTMLElement|Element|typeof window
-}):void
+function event (
+    event:CustomEvent|Event|string,
+    element?:Element|Window|null
+):void
 ```
 
-#### event example
+#### `event` example
 ```js
 import { dom } from '@bicycle-codes/dom'
 
-dom.event({ event: 'hello', element: dom.qs('#example') })
+// pass in an event name. Will create a custom event.
+dom.event('hello', dom.qs('#test'))
+
+// create an event, then dispatch it
+dom.event(
+    new CustomEvent('test-event', {
+        bubbles: true,
+        detail: 'test'
+    }),
+    dom.qs('#test-two')
+)
 ```
 
-### sleep
+### `sleep`
 Wait for the given milliseconds.
 
 ```ts
 async function sleep (ms:number):Promise<void>
 ```
 
-#### sleep example
+#### `sleep` example
 ```js
 import { sleep } from '@bicycle-codes/dom'
 
 await sleep(3000)  // wait 3 seconds
 ```
 
-### type
+### `type`
+Enter text into an input. This will simulate typing by dispatching `input` events.
+
 ```ts
-export async function type (
+async function type (
     selector:string|HTMLElement|Element,
     value:string,
 ):Promise<void>
 ```
 
-#### example
+#### `type` example
+
 ```js
+import { type } from '@bicycle-codes/dom'
+
+// this will dispatch 5 `input` events,
+// one for each character
+await type('#test', 'hello')
 ```
 
 ## credits
