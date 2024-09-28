@@ -148,6 +148,7 @@ export function waitForText (args:Partial<{
     }
 
     return waitFor(
+        null,
         { timeout: opts.timeout },
         () => {  // the lambda
             const {
@@ -213,55 +214,73 @@ export function waitForText (args:Partial<{
     )
 }
 
-type Lambda = () => Element|null
+/**
+ * Resolve the promise with the element found by a query selector.
+ *
+ * @param {string|Object} args A query selcetor and timeout and `visible`.
+ * @param {() => HTMLElement | Element | null | undefined} [lambda] An optional
+ *   function that returns the element. Used if `selector` is not provided.
+ * @returns {Promise<Element|HTMLElement|void>} A promise that resolves to the
+ *   found element.
+ *
+ * @throws {Error} - Throws an error if neither `lambda` nor `selector` is provided.
+ * @throws {Error} - Throws an error if the element is not found within the timeout.
+ *
+ * @example
+ * ```js
+ * waitFor({ selector: '#my-element', visible: true, timeout: 5000 })
+ *   .then(el => console.log('Element found:', el))
+ *   .catch(err => console.log('Element not found:', err));
+ * ```
+ */
 
 /**
- * Find an element by query selector.
+ * Wait for an element to appear in the DOM, then resolve the promise. Either
+ * a query selector or lambda function must be provided.
  *
- * @param {{
- *    selector?: string,
- *    visible?: boolean, // the element needs to be visible
- *    timeout?: number // how long to wait
- * }|string} args
- * @param {() => Element|null} [lambda] A function to match an element
- * @throws {Error} - Throws an error if neither `lambda` nor `selector`
- * is provided.
- * @throws {Error} - Throws an error if the element is not found within
- * the timeout.
- * @returns {Element|null} The HTML element
+ * @param {Object|string} args Configuration args
+ * @param {string} [args.selector] CSS selector to look for
+ * @param {boolean} [args.visible=true] Should the element be visible?
+ *   Default `true`
+ * @param {number} [args.timeout=DEFAULT_TIMEOUT] Time in milliseconds to wait
+ *   before rejecting the promise
+ * @param {() => Element|null} [lambda] An optional function that returns the
+ *   element. Used if the `selector` is not provided.
+ * @returns {Promise<Element|HTMLElement|null>} A promise that resolves to the
+ *   found element.
+ *
+ * @throws {Error} - Throws if neither `lambda` nor `selector` is provided.
+ * @throws {Error} - Throws if the element is not found within the timeout.
+ *
+ * @example
+ * ```js
+ * waitFor({ selector: '#my-element', visible: true, timeout: 5000 })
+ *   .then(el => console.log('Element found:', el))
+ *   .catch(err => console.log('Element not found:', err));
+ * ```
  */
-export function waitFor (
-    args:{
-        selector?:string,
-        visible?:boolean,
-        timeout?:number
-    }|string,
-    lambda?:Lambda
-):Promise<Element|null> {
-    let selector:string
-    let visible:boolean
-    let timeout = DEFAULT_TIMEOUT
-    if (typeof args === 'string') {
-        selector = args
-    } else {
-        if (typeof args.visible === 'undefined') visible = true
-        timeout = args.timeout ?? DEFAULT_TIMEOUT
-        selector = args.selector!
-    }
-
+export function waitFor (selector?:string|null, args?:{
+    visible?:boolean,
+    timeout?:number
+}, lambda?):Promise<Element|null> {
     return new Promise((resolve, reject) => {
+        const visible = args?.visible ?? true
+        const timeout = args?.timeout ?? DEFAULT_TIMEOUT
+
         if (!lambda && selector) {
-            lambda = () => document.querySelector(selector)
+            lambda = () => {
+                return globalThis.document.querySelector(selector)
+            }
+        }
+
+        if (!lambda) {
+            throw new Error('lambda or selector required')
         }
 
         const interval = setInterval(() => {
-            if (!lambda) {
-                throw new Error('lambda or selector required')
-            }
-
             const el = lambda()
             if (el) {
-                if (visible && !dom.isElementVisible(el)) return
+                if (visible && !isElementVisible(el)) return
                 clearTimeout(timer)
                 return resolve(el)
             }
@@ -270,9 +289,9 @@ export function waitFor (
         const timer = setTimeout(() => {
             clearInterval(interval)
             const wantsVisable = visible ? 'A visible selector' : 'A Selector'
-            reject(new Error(
-                `${wantsVisable} was not found after ${timeout}ms (${selector})`
-            ))
+            reject(
+                new Error(`${wantsVisable} was not found after ${timeout}ms (${selector})`)
+            )
         }, timeout)
     })
 }

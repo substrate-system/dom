@@ -7,9 +7,7 @@ test('dom.waitFor', async t => {
     p.textContent = 'testing'
     document.body.appendChild(p)
 
-    const foundP = await dom.waitFor({
-        selector: 'p'
-    })
+    const foundP = await dom.waitFor('p')
 
     t.equal(foundP!.textContent, 'testing', 'should find the element by tag')
 
@@ -21,7 +19,7 @@ test('dom.waitFor', async t => {
     a.id = 'hello'
     a.textContent = 'hello'
 
-    const foundA = await dom.waitFor({ selector: '#hello' })
+    const foundA = await dom.waitFor('#hello')
     t.ok(foundA, 'should find an element by ID')
     t.equal(foundA?.textContent, 'hello', 'should find the right element by ID')
 
@@ -34,20 +32,32 @@ test('dom.waitFor', async t => {
     }, 2000)
 
     // first start waiting
-    const el = await dom.waitFor({
-        selector: '#foo'
-    })
+    const el = await dom.waitFor('#foo')
 
     t.equal(el!.textContent, 'bar', 'should find the element after waiting')
 })
 
-test('call waitFor with a string', async t => {
-    const el = dom.waitFor('p')
-    t.ok(el, 'should find an element given a string argument')
+test('call waitFor with a string and options', async t => {
+    const el = dom.waitFor('p', { timeout: 1000, visible: false })
+    t.ok(el, 'should find an element given a some option args')
+})
+
+test("dom.waitFor when it doesn't find an element", async t => {
+    t.plan(1)
+
+    try {
+        await dom.waitFor('.doesnt-exist', { timeout: 1000 })
+    } catch (err) {
+        t.equal(
+            (err as Error).message,
+            'A visible selector was not found after 1000ms (.doesnt-exist)',
+            "should throw if it doesn't find an element"
+        )
+    }
 })
 
 test('dom.click', async t => {
-    const p = await dom.waitFor({ selector: 'p' })
+    const p = await dom.waitFor('p')
     p?.addEventListener('click', function listener (ev) {
         t.ok(ev instanceof MouseEvent,
             'should get a click event given an element')
