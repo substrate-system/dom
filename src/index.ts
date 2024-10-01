@@ -96,7 +96,7 @@ export function isAttributeVisible (element:Element, previousElement?:Element):b
 }
 
 /**
- * Return if the given element is visible.
+ * Return `true` if the given element is visible.
  * Copy pasted from https://raw.githubusercontent.com/testing-library/jest-dom/master/src/to-be-visible.js
  *
  * @param {Element} element
@@ -215,38 +215,14 @@ export function waitForText (args:Partial<{
 }
 
 /**
- * Resolve the promise with the element found by a query selector.
- *
- * @param {string|Object} args A query selcetor and timeout and `visible`.
- * @param {() => HTMLElement | Element | null | undefined} [lambda] An optional
- *   function that returns the element. Used if `selector` is not provided.
- * @returns {Promise<Element|HTMLElement|void>} A promise that resolves to the
- *   found element.
- *
- * @throws {Error} - Throws an error if neither `lambda` nor `selector` is provided.
- * @throws {Error} - Throws an error if the element is not found within the timeout.
- *
- * @example
- * ```js
- * waitFor({ selector: '#my-element', visible: true, timeout: 5000 })
- *   .then(el => console.log('Element found:', el))
- *   .catch(err => console.log('Element not found:', err));
- * ```
- */
-
-/**
  * Wait for an element to appear in the DOM, then resolve the promise. Either
  * a query selector or lambda function must be provided.
  *
- * @param {Object|string} args Configuration args
- * @param {string} [args.selector] CSS selector to look for
- * @param {boolean} [args.visible=true] Should the element be visible?
- *   Default `true`
- * @param {number} [args.timeout=DEFAULT_TIMEOUT] Time in milliseconds to wait
- *   before rejecting the promise
+ * @param {string} [selector] The CSS selector to use
+ * @param {{ visible:boolean, timeout:number }} [args] Configuration args
  * @param {() => Element|null} [lambda] An optional function that returns the
  *   element. Used if the `selector` is not provided.
- * @returns {Promise<Element|HTMLElement|null>} A promise that resolves to the
+ * @returns {Promise<Element|null>} A promise that resolves to the
  *   found element.
  *
  * @throws {Error} - Throws if neither `lambda` nor `selector` is provided.
@@ -262,7 +238,7 @@ export function waitForText (args:Partial<{
 export function waitFor (selector?:string|null, args?:{
     visible?:boolean,
     timeout?:number
-}|null, lambda?):Promise<Element|null> {
+}|null, lambda?:()=>Element|null):Promise<Element|null> {
     return new Promise((resolve, reject) => {
         const visible = args?.visible ?? true
         const timeout = args?.timeout ?? DEFAULT_TIMEOUT
@@ -278,7 +254,7 @@ export function waitFor (selector?:string|null, args?:{
         }
 
         const interval = setInterval(() => {
-            const el = lambda()
+            const el = lambda!()
             if (el) {
                 if (visible && !isElementVisible(el)) return
                 clearTimeout(timer)
