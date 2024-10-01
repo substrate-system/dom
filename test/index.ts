@@ -48,6 +48,14 @@ test('call waitFor with a string and options', async t => {
     t.ok(el, 'should find an element given a some option args')
 })
 
+test('call waitFor with a lambda only', async t => {
+    const el = dom.waitFor(null, null, () => {
+        return document.querySelector('p')
+    })
+
+    t.ok(el, 'should find an element given a lambda function')
+})
+
 test("dom.waitFor when it doesn't find an element", async t => {
     t.plan(1)
 

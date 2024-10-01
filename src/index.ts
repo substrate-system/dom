@@ -262,7 +262,7 @@ export function waitForText (args:Partial<{
 export function waitFor (selector?:string|null, args?:{
     visible?:boolean,
     timeout?:number
-}, lambda?):Promise<Element|null> {
+}|null, lambda?):Promise<Element|null> {
     return new Promise((resolve, reject) => {
         const visible = args?.visible ?? true
         const timeout = args?.timeout ?? DEFAULT_TIMEOUT
