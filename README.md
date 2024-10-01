@@ -48,26 +48,23 @@ __`dom.byId`__ is equal to `document.getElementById`
 Look for a DOM element by slector. Default timeout is 5 seconds. Throws if the element is not found.
 
 ```ts
-export function waitFor (
-    args:{
-        selector?:string,
-        visible?:boolean,
-        timeout?:number
-    }|string,
-    lambda?:() => Element|null
-):Promise<Element|null>
+function waitFor (selector?:string|null, args?:{
+    visible?:boolean,
+    timeout?:number
+}|null, lambda?):Promise<Element|null>
 ```
 
 #### `waitFor` example
 ```js
 import { waitFor } from '@bicycle-codes/dom'
 
-const foundElement = await waitFor({
-    selector: 'p'
-})
-
 // or pass in a query selector string
 const el = await waitFor('#my-element')
+
+// example of using a lambda function only
+const el2 = dom.waitFor(null, null, () => {
+    return document.querySelector('p')
+})
 ```
 
 ### `waitForText`
