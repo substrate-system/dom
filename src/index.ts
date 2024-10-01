@@ -266,7 +266,9 @@ export function waitFor (selector?:string|null, args?:{
             clearInterval(interval)
             const wantsVisable = visible ? 'A visible selector' : 'A Selector'
             reject(
-                new Error(`${wantsVisable} was not found after ${timeout}ms (${selector})`)
+                selector ?
+                    new Error(`${wantsVisable} was not found after ${timeout}ms (${selector})`) :
+                    new Error(`${wantsVisable} was not found after ${timeout}ms`)
             )
         }, timeout)
     })
