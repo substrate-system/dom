@@ -8,7 +8,7 @@
 [![Common Changelog](https://nichoth.github.io/badge/common-changelog.svg)](https://common-changelog.org)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
-Helpers for working with the DOM, useful for tests.
+Helpers for working with the DOM; useful for tests.
 
 [Read the docs](https://bicycle-codes.github.io/dom/)
 
