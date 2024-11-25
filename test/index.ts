@@ -1,5 +1,5 @@
 import { byId, dom, qs, waitForText, type } from '../src/index.js'
-import { test } from '@bicycle-codes/tapzero'
+import { test } from '@substrate-system/tapzero'
 import { Terminal } from 'xterm'
 
 test('byId', t => {
