@@ -1,5 +1,5 @@
 {
-  "name": "@bicycle-codes/dom",
+  "name": "@substrate-system/dom",
   "description": "Helpers for working with the DOM",
   "private": false,
   "type": "module",
@@ -24,7 +24,7 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@bicycle-codes/tapzero": "^0.10.3",
+    "@substrate-system/tapzero": "^0.10.3",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "auto-changelog": "^2.4.0",
@@ -60,15 +60,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bicycle-codes/dom.git"
+    "url": "git+https://github.com/substrate-system/dom.git"
   },
   "keywords": [
     "test",
     "dom"
   ],
   "bugs": {
-    "url": "https://github.com/bicycle-codes/dom/issues"
+    "url": "https://github.com/substrate-system/dom/issues"
   },
-  "homepage": "https://github.com/bicycle-codes/dom#readme",
+  "homepage": "https://github.com/substrate-system/dom",
   "license": "MIT"
 }

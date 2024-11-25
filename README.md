@@ -1,35 +1,35 @@
 # dom
-![tests](https://github.com/bicycle-codes/dom/actions/workflows/nodejs.yml/badge.svg)
+![tests](https://github.com/substrate-system/dom/actions/workflows/nodejs.yml/badge.svg)
 [![types](https://img.shields.io/npm/types/msgpackr?style=flat-square)](README.md)
 [![module](https://img.shields.io/badge/module-ESM%2FCJS-blue?style=flat-square)](README.md)
 [![dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen.svg?style=flat-square)](package.json)
 [![semantic versioning](https://img.shields.io/badge/semver-2.0.0-blue?logo=semver&style=flat-square)](https://semver.org/)
-[![install size](https://flat.badgen.net/packagephobia/install/@bicycle-codes/dom)](https://packagephobia.com/result?p=@bicycle-codes/dom)
+[![install size](https://flat.badgen.net/packagephobia/install/@substrate-system/dom)](https://packagephobia.com/result?p=@substrate-system/dom)
 [![Common Changelog](https://nichoth.github.io/badge/common-changelog.svg)](https://common-changelog.org)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 Helpers for working with the DOM; useful for tests.
 
-[Read the docs](https://bicycle-codes.github.io/dom/)
+[Read the docs](https://substrate-system.github.io/dom/)
 
 ## install
 ```sh
-npm i -D @bicycle-codes/dom
+npm i -D @substrate-system/dom
 ```
 
 ## use
 
 ### import
 ```js
-import { dom } from '@bicycle-codes/dom'
+import { dom } from '@substrate-system/dom'
 
 // or import individual functions
-import { waitFor } from '@bicycle-codes/dom'
+import { waitFor } from '@substrate-system/dom'
 ```
 
 ### require
 ```js
-const dom = require('@bicycle-codes/dom').dom
+const dom = require('@substrate-system/dom').dom
 ```
 
 ## API
@@ -58,7 +58,7 @@ function waitFor (selector?:string|null, args?:{
 
 #### `waitFor` example
 ```js
-import { waitFor } from '@bicycle-codes/dom'
+import { waitFor } from '@substrate-system/dom'
 
 // or pass in a query selector string
 const el = await waitFor('#my-element')
@@ -86,7 +86,7 @@ function waitForText (args:Partial<{
 #### `waitForText` example
 
 ```js
-import { waitForText } from '@bicycle-codes/dom'
+import { waitForText } from '@substrate-system/dom'
 
 // by default will search the document.body
 const el = await waitForText({
@@ -98,7 +98,7 @@ const el = await waitForText({
 Can pass in a string to search for. Will search the `document.body` by default.
 
 ```js
-import { waitForText } from '@bicycle-codes/dom'
+import { waitForText } from '@substrate-system/dom'
 
 const el = await dom.waitForText('bar')
 ```
@@ -123,8 +123,8 @@ async function click (selector:Element|string):Promise<void>
 #### `click` example
 
 ```js
-import { dom } from '@bicycle-codes/dom'
-// or import { click } from '@bicycle-codes/dom'
+import { dom } from '@substrate-system/dom'
+// or import { click } from '@substrate-system/dom'
 
 dom.click(dom.qs('#my-element'))
 
@@ -144,7 +144,7 @@ function event (
 
 #### `event` example
 ```js
-import { dom } from '@bicycle-codes/dom'
+import { dom } from '@substrate-system/dom'
 
 // pass in an event name. Will create a custom event.
 dom.event('hello', dom.qs('#test'))
@@ -168,7 +168,7 @@ async function sleep (ms:number):Promise<void>
 
 #### `sleep` example
 ```js
-import { sleep } from '@bicycle-codes/dom'
+import { sleep } from '@substrate-system/dom'
 
 await sleep(3000)  // wait 3 seconds
 ```
@@ -186,7 +186,7 @@ async function type (
 #### `type` example
 
 ```js
-import { type } from '@bicycle-codes/dom'
+import { type } from '@substrate-system/dom'
 
 // this will dispatch 5 `input` events,
 // one for each character
