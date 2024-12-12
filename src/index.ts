@@ -1,4 +1,5 @@
 import { toElement, requestAnimationFrame } from './util.js'
+import { sleep } from './sleep.js'
 export const qs = document.querySelector.bind(document)
 export const qsa = document.querySelectorAll.bind(document)
 export const byId = document.getElementById.bind(document)
@@ -20,21 +21,6 @@ export const dom = {
 }
 
 export default dom
-
-/**
- * Sleeps for `ms` milliseconds.
- * @param {number} ms
- * @return {Promise<void>}
- */
-export async function sleep (ms:number):Promise<void> {
-    await new Promise((resolve) => {
-        if (!ms) {
-            process.nextTick(resolve)
-        } else {
-            setTimeout(resolve, ms)
-        }
-    })
-}
 
 /**
  * @param {Element} element
