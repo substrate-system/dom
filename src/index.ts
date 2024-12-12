@@ -7,6 +7,8 @@ export const byId = document.getElementById.bind(document)
 const SECOND = 1000
 const DEFAULT_TIMEOUT = (5 * SECOND)
 
+export { sleep }
+
 export const dom = {
     getComputedStyle,
     isElementVisible,
