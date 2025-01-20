@@ -120,7 +120,7 @@ export function waitForText (args:Partial<{
     timeout:number,
     multipleTags:boolean,
     regex:RegExp
-}>|string, parentElement:Element = document.body):Promise<Element|null> {
+}>|string, parentElement:Element = document.body):Promise<HTMLElement|null> {
     let opts:{
         text?:string;
         timeout?:number;
@@ -226,7 +226,7 @@ export function waitForText (args:Partial<{
 export function waitFor (selector?:string|null, args?:{
     visible?:boolean,
     timeout?:number
-}|null, lambda?:()=>Element|null):Promise<Element|null> {
+}|null, lambda?:()=>Element|null):Promise<HTMLElement|null> {
     return new Promise((resolve, reject) => {
         const visible = args?.visible ?? true
         const timeout = args?.timeout ?? DEFAULT_TIMEOUT
@@ -246,7 +246,7 @@ export function waitFor (selector?:string|null, args?:{
             if (el) {
                 if (visible && !isElementVisible(el)) return
                 clearTimeout(timer)
-                return resolve(el)
+                return resolve(el as HTMLElement)
             }
         }, 50)
 
