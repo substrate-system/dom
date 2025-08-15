@@ -274,7 +274,7 @@ export function waitFor (selector?:string|null, args?:{
  * await click('.class button', 'Click a button')
  * ```
  */
-export async function click (selector:Element|string):Promise<void> {
+export async function click (selector:HTMLElement|string):Promise<void> {
     const element = toElement(selector)
 
     event(new globalThis.MouseEvent('click', {
