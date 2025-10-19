@@ -15,7 +15,25 @@ Helpers for working with the DOM; useful for tests.
 [Read the docs](https://substrate-system.github.io/dom/)
 
 <details><summary><h2>Contents</h2></summary>
+
 <!-- toc -->
+
+- [Install](#install)
+- [Use](#use)
+  * [`import`](#import)
+  * [`require`](#require)
+- [API](#api)
+  * [convenient shortcuts](#convenient-shortcuts)
+  * [`waitFor`](#waitfor)
+  * [`waitForText`](#waitfortext)
+  * [`click`](#click)
+  * [`event`](#event)
+  * [`sleep`](#sleep)
+  * [`type`](#type)
+- [credits](#credits)
+
+<!-- tocstop -->
+
 </details>
 
 
