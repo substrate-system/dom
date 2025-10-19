@@ -2,6 +2,16 @@ import { byId, dom, qs, waitForText, type } from '../src/index.js'
 import { test } from '@substrate-system/tapzero'
 import { Terminal } from 'xterm'
 
+test('setup', () => {
+    document.body.innerHTML += `
+        <form>
+            <input id="test-input" type="text" />
+        </form>
+
+        <div id="id-test">testing the ID attribute</div>
+    `
+})
+
 test('byId', t => {
     t.plan(1)
     const el = byId('id-test')
