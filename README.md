@@ -1,26 +1,33 @@
 # dom
-![tests](https://github.com/substrate-system/dom/actions/workflows/nodejs.yml/badge.svg)
+[![tests](https://img.shields.io/github/actions/workflow/status/substrate-system/dom/nodejs.yml?style=flat-square)](https://github.com/substrate-system/dom/actions/workflows/nodejs.yml)
 [![types](https://img.shields.io/npm/types/msgpackr?style=flat-square)](README.md)
 [![module](https://img.shields.io/badge/module-ESM%2FCJS-blue?style=flat-square)](README.md)
 [![dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen.svg?style=flat-square)](package.json)
 [![semantic versioning](https://img.shields.io/badge/semver-2.0.0-blue?logo=semver&style=flat-square)](https://semver.org/)
 [![install size](https://flat.badgen.net/packagephobia/install/@substrate-system/dom)](https://packagephobia.com/result?p=@substrate-system/dom)
+[![GZip size](https://img.shields.io/bundlephobia/minzip/@substrate-system/dom?style=flat-square&color=green)](https://bundlephobia.com/package/@substrate-system/dom)
 [![Common Changelog](https://nichoth.github.io/badge/common-changelog.svg)](https://common-changelog.org)
-[![license](https://img.shields.io/badge/license-Polyform_Non_Commercial-26bc71?style=flat-square)](LICENSE)
+[![license](https://img.shields.io/badge/license-Big_Time-blue?style=flat-square)](LICENSE)
 
 
 Helpers for working with the DOM; useful for tests.
 
 [Read the docs](https://substrate-system.github.io/dom/)
 
-## install
+<details><summary><h2>Contents</h2></summary>
+<!-- toc -->
+</details>
+
+
+## Install
+
 ```sh
 npm i -D @substrate-system/dom
 ```
 
-## use
+## Use
 
-### import
+### `import`
 ```js
 import { dom } from '@substrate-system/dom'
 
@@ -28,7 +35,7 @@ import { dom } from '@substrate-system/dom'
 import { waitFor } from '@substrate-system/dom'
 ```
 
-### require
+### `require`
 ```js
 const dom = require('@substrate-system/dom').dom
 ```
