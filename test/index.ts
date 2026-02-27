@@ -306,3 +306,8 @@ test('type', async t => {
 
     await type('#test-input', 'hello world')
 })
+
+test('all done', () => {
+    // @ts-expect-error tests
+    window.testsFinished = true
+})
