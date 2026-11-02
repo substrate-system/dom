@@ -33,7 +33,7 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@substrate-system/tapout": "^0.0.44",
+    "@substrate-system/tapout": "^0.1.1",
     "@substrate-system/tapzero": "^0.10.16",
     "@types/node": "^26.6.5",
     "auto-changelog": "^2.4.0",
