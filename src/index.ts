@@ -1,7 +1,42 @@
 import { toElement, requestAnimationFrame } from './util.js'
 import { sleep } from './sleep.js'
-export const qs = document.querySelector.bind(document)
-export const qsa = document.querySelectorAll.bind(document)
+
+type AnyElement = HTMLElement|SVGElement
+
+/**
+ * `document.querySelector`, typed to return an `HTMLElement` or an
+ * `SVGElement`.
+ */
+export function qs<K extends keyof HTMLElementTagNameMap> (
+    selector:K
+):HTMLElementTagNameMap[K]|null
+export function qs<K extends keyof SVGElementTagNameMap> (
+    selector:K
+):SVGElementTagNameMap[K]|null
+export function qs<E extends AnyElement = AnyElement> (
+    selector:string
+):E|null
+export function qs (selector:string):AnyElement|null {
+    return document.querySelector<AnyElement>(selector)
+}
+
+/**
+ * `document.querySelectorAll`, typed to return `HTMLElement`s or
+ * `SVGElement`s.
+ */
+export function qsa<K extends keyof HTMLElementTagNameMap> (
+    selector:K
+):NodeListOf<HTMLElementTagNameMap[K]>
+export function qsa<K extends keyof SVGElementTagNameMap> (
+    selector:K
+):NodeListOf<SVGElementTagNameMap[K]>
+export function qsa<E extends AnyElement = AnyElement> (
+    selector:string
+):NodeListOf<E>
+export function qsa (selector:string):NodeListOf<AnyElement> {
+    return document.querySelectorAll<AnyElement>(selector)
+}
+
 export const byId = document.getElementById.bind(document)
 
 const SECOND = 1000
